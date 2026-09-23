@@ -1,0 +1,50 @@
+{
+    "classifiers": {
+        "formality": {
+            "model_name_or_path": "",
+            "label": "formality_more",
+            "config": {}
+        },
+        "function": {
+            "model_name_or_path": "",
+            "label": "function_more",
+            "config": {}
+        },
+        "grade": {
+            "model_name_or_path": "",
+            "label": "grade_more",
+            "config": {}
+        },
+        "hostility": {
+            "model_name_or_path": "",
+            "label": "hostility_more",
+            "config": {}
+        },
+        "length": {
+            "model_name_or_path": "",
+            "label": "length_more",
+            "config": {}
+        },
+        "sarcasm": {
+            "model_name_or_path": "",
+            "label": "sarcasm_more",
+            "config": {}
+        },
+        "type": {
+            "model_name_or_path": "",
+            "label": "*",
+            "config": {}
+        },
+        "voice": {
+            "model_name_or_path": "",
+            "label": "voice_more",
+            "config": {}
+        },
+        "vulgarity": {
+            "model_name_or_path": "",
+            "label": "vulgarity_more",
+            "config": {}
+        }
+    },
+    "adapters": {}
+}

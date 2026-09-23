@@ -1,0 +1,32 @@
+{%- set examples = {
+    'example_base_text': 'The meeting that was scheduled for 3 hours somehow managed to last for 5 hours without reaching any concrete decisions.',
+    'example_more_narrative': 'The clock ticked relentlessly as the meeting dragged on. Initially planned for three hours, it stretched to five, leaving the participants weary and frustrated. Discussions circled endlessly, and when the final moments arrived, no concrete decisions had been made. It was a stark reminder of how time can slip away unnoticed.'
+} -%}
+
+{%- set post_prompt = 'Do not add any notes to the text, only respond with the rewrite.' -%}
+
+{%- set more_prompt -%}
+Please rewrite the given text to make it more narrative. Focus on storytelling elements such as characters, setting, plot development, and descriptive language to immerse the reader.
+
+Example input:
+{{ examples.example_base_text }}
+
+Example output:
+{{ examples.example_more_narrative }}
+
+Rules for increasing narrative style:
+- Introduce characters: Highlight who is involved in the story and their emotions or actions.
+- Describe the setting: Provide vivid details about the time, place, or atmosphere to situate the reader.
+- Develop a plot: Include elements like exposition, rising action, conflict, climax, and resolution to structure the events.
+- Use descriptive language: Incorporate sensory details (sight, sound, touch, smell, taste) and figurative language (metaphors, similes, personification) to evoke feelings.
+- Add dialogue: Include conversations between characters to bring them to life.
+- Use a clear point of view: Decide whether the story is told from first-person or third-person perspective.
+- Create tension or emotion: Build suspense or highlight emotional stakes to engage the reader.
+
+{{ post_prompt }}
+{%- endset -%}
+
+{
+    "more": {{ more_prompt | tojson }},
+    "less": ""
+}

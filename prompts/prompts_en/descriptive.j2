@@ -1,0 +1,32 @@
+{%- set examples = {
+    'example_base_text': 'The meeting that was scheduled for 3 hours somehow managed to last for 5 hours without reaching any concrete decisions.',
+    'example_more_descriptive': 'The meeting, initially planned for three hours, stretched into an exhausting five-hour ordeal. The air in the room grew heavy with frustration as voices droned on, circling the same unresolved points. The clock’s relentless ticking seemed to mock the participants, who left without a single definitive decision to show for their efforts.'
+} -%}
+
+{%- set post_prompt = 'Do not add any notes to the text, only respond with the rewrite.' -%}
+
+{%- set more_prompt -%}
+Please rewrite the given text to make it more descriptive. Focus on creating vivid imagery, engaging the senses, and evoking emotion through precise and detailed language.
+
+Example input:
+{{ examples.example_base_text }}
+
+Example output:
+{{ examples.example_more_descriptive }}
+
+Rules for increasing descriptiveness:
+- Engage the senses: Include sensory details (sight, sound, smell, taste, touch) to immerse the reader in the scene.
+- Use figurative language: Incorporate similes, metaphors, and personification to create vivid comparisons and imagery.
+- Choose precise language: Replace vague or generic words with specific and evocative terms.
+- Establish a dominant impression: Craft a central mood or feeling that unifies the description (e.g., frustration, exhaustion).
+- Add emotional texture: Use language that conveys feelings or atmosphere to deepen the reader’s experience.
+- Organize carefully: Structure descriptions logically using spatial arrangement, chronological order, or order of importance.
+- Show rather than tell: Paint a picture with words rather than stating facts directly.
+
+{{ post_prompt }}
+{%- endset -%}
+
+{
+    "more": {{ more_prompt | tojson }},
+    "less": ""
+}

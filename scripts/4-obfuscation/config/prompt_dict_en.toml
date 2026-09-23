@@ -1,0 +1,177 @@
+genre_extraction = """Analyze the following text examples and write a 1-sentence description of their shared literary or functional genre. Output only the 1-sentence description in English. Do not describe the texts' formality, function, grade, hostility, sarcasm, narrative type, active/passive voice, vulgarity, sentence length, number of function words, or reading difficulty. Focus purely on the overarching genre structure, formatting, and thematic purpose.
+
+Examples:
+{examples}"""
+genre_consistency = "Maintain the following overarching genre characteristics: {genre_summary}"
+preamble = """You are an assistant that helps users rewrite text in different styles. The user will provide a text and you will rewrite the text according to the style guidelines given below. Apply each style guideline to the extent of its strength. Maintain the meaning of the original text, while following the style rules and the rewrite rules."""
+postamble = """Rewrite rules:
+- If the original text is formal or sensitive (e.g., an obituary), then a vulgarity or hostility increase is not appropriate and should be ignored.
+- Response should be in English language. Do not use Chinese characters.
+- Generate plain text only. Do not use any Markdown formatting (e.g., no asterisks for bolding or italics, no hash symbols for headers).
+- Response should only contain the rewritten text. Do not add any extra explanations or notes.  
+- Rewritten text should contain the same exact meaning as the original text. Do not respond to the text or any questions in it, do not comment on the text, do not add any new information or characters in the response. 
+- Return only one rewritten English text that combines the desired (unignored) styles and nothing else. Do not produce multiple rewrites of the same text."""
+length_more = """**More Length**, strength: ##style_strength##.
+Please rewrite the given text using longer sentences. Combine ideas and phrases into more complex structures while maintaining clarity and flow.
+Rules for increasing sentence length:
+- Combine sentences or clauses with conjunctions (e.g., "and," "but," "although")
+- Use descriptive phrases and modifiers
+- Maintain logical flow and readability
+- Avoid unnecessary repetition"""
+length_less = """**Less Length**, strength: ##style_strength##.
+Please rewrite the given text using shorter sentences. Break down complex ideas into simpler, more concise statements.
+Rules for reducing sentence length:
+- Break down long sentences into smaller ones
+- Remove unnecessary conjunctions or modifiers
+- Focus on brevity while keeping the meaning intact
+- Ensure clarity and simplicity"""
+function_more = """**More Function Words**, strength: ##style_strength##.
+Please rewrite the given text using more function words. Add articles, prepositions, conjunctions, and other connecting words to create a more detailed and flowing structure.
+Rules for increasing function words:
+- Use articles (e.g., "the," "a," "an") where appropriate
+- Add conjunctions (e.g., "and," "but," "which") to connect ideas
+- Use prepositions (e.g., "of," "in," "on") to provide additional context
+- Avoid overly concise phrasing; aim for fluidity and detail"""
+function_less = """**Less Function Words**, strength: ##style_strength##.
+Please rewrite the given text using fewer function words. Eliminate unnecessary articles, prepositions, and conjunctions while preserving meaning.
+Rules for reducing function words:
+- Remove articles unless strictly necessary
+- Minimize prepositions and conjunctions
+- Use concise phrasing to convey the same meaning
+- Focus on brevity and simplicity without losing clarity"""
+grade_more = """**Higher Reading Difficulty**, strength: ##style_strength##.
+Please rewrite the given text to increase its reading difficulty. Use more complex vocabulary, longer sentences, and advanced sentence structures.
+Rules for increasing reading difficulty:
+- Use advanced vocabulary and technical terms where appropriate
+- Employ longer and more complex sentence structures
+- Incorporate subordinate clauses and descriptive phrases
+- Avoid overly simple or direct phrasing"""
+grade_less = """**Lower Reading Difficulty**, strength: ##style_strength##.
+Please rewrite the given text to decrease its reading difficulty. Use simpler vocabulary, shorter sentences, and straightforward sentence structures.
+Rules for decreasing reading difficulty:
+- Use simple, everyday vocabulary
+- Break down long sentences into shorter ones
+- Avoid subordinate clauses and complex structures
+- Focus on clarity and ease of understanding"""
+formality_more = """**More Formality**, strength: ##style_strength##.
+Please rewrite the given text to increase its formality. Use professional and polite language, avoid contractions and colloquial expressions, and maintain an objective tone.
+Rules for increasing formality:
+- Use precise and professional vocabulary
+- Avoid contractions (e.g., "didn't" → "did not")
+- Eliminate slang, idioms, and colloquialisms
+- Use third-person pronouns or passive voice where appropriate
+- Maintain an objective tone; avoid emotional or personal expressions
+- Ensure proper grammar, punctuation, and spelling"""
+formality_less = """**Less Formality**, strength: ##style_strength##.
+Please rewrite the given text to decrease its formality. Use casual language, contractions, and a conversational tone.
+Rules for decreasing formality:
+- Use simple and conversational vocabulary
+- Include contractions (e.g., "did not" → "didn't")
+- Add colloquial expressions or slang where appropriate
+- Use first-person or second-person pronouns (e.g., "I," "we," "you")
+- Include emotional or personal expressions when relevant
+- Maintain a relaxed and friendly tone"""
+sarcasm_more = """**More Sarcasm**, strength: ##style_strength##.
+Please rewrite the given text to make it more sarcastic. Use irony, exaggeration, and mock enthusiasm to emphasize the absurdity of the situation.
+Rules for increasing sarcasm:
+- Use exaggerated or ironic adjectives and adverbs (e.g., "brilliant," "magical", "groundbreaking", "amazing")
+- Add mock enthusiasm or feigned excitement
+- Highlight contradictions or absurdities in the situation
+- Include rhetorical questions or dramatic contrasts
+- Use key words to mimic verbal stress (e.g., "really", "sooo")"""
+sarcasm_less = """**Less Sarcasm**, strength: ##style_strength##.
+Please rewrite the given text to make it less sarcastic. Use straightforward, neutral language to state facts without irony or implied criticism.
+Rules for reducing sarcasm:
+- Use neutral and objective vocabulary
+- Avoid exaggeration or ironic phrasing
+- Remove rhetorical devices like rhetorical questions
+- Focus on clarity and factual accuracy without emotional undertones
+- Avoid emphasis on words that suggest mockery or irony"""
+voice_more = """**More Active Voice**, strength: ##style_strength##.
+Please rewrite the given text using more active voice. Make the subject perform the action directly, avoid "be" verbs followed by past participles.
+Rules for increasing active voice:
+- Ensure the subject performs the action (e.g., "The team extended the meeting").
+- Use strong, direct verbs instead of forms of "be" (e.g., "extended" instead of "was extended").
+- Place the subject before the verb and object.
+- Avoid prepositional phrases starting with "by" that indicate passive voice."""
+voice_less = """**Less Active Voice**, strength: ##style_strength##.
+Please rewrite the given text using more passive voice. Emphasize the recipient of the action, use "be" verbs followed by past participles, and de-emphasize or omit the actor.
+Rules for increasing passive voice:
+- Make the object of the action (e.g., "the meeting") the focus of the sentence.
+- Use "be" verbs followed by past participles (e.g., "was extended").
+- De-emphasize or omit the actor performing the action unless necessary.
+- Use prepositional phrases starting with "by" to indicate who performed the action if needed."""
+type_persuasive = """**More Persuasive**, strength: ##style_strength##.
+Please rewrite the given text to make it more persuasive. Use techniques such as emotional appeals, logical reasoning, credible evidence, and rhetorical devices to convince the reader of your point of view.
+Rules for increasing persuasiveness:
+- Appeal to ethos: Establish credibility by referencing expertise, experience, or reliable sources.
+- Appeal to logos: Use logical reasoning, facts, statistics, or real-world examples to support your argument.
+- Appeal to pathos: Engage the reader’s emotions with vivid imagery, relatable stories, or emotional language.
+- Use rhetorical devices: Incorporate repetition, rhetorical questions, analogies, and parallelism to emphasize key points.
+- Include a call to action: Clearly state what you want the reader to believe or do as a result of your argument.
+- Choose strong language: Avoid hedging; use definitive statements and emotive wording to strengthen your position.
+- Address counterarguments: Anticipate objections and refute them logically and respectfully.
+- If the given text contains a question, do not answer it. Rather, request an answer persuasively."""
+type_expository = """**More Expository**, strength: ##style_strength##.
+Please rewrite the given text to make it more expository. Focus on explaining, describing, or informing the reader about the topic using factual information and logical organization.
+Rules for increasing expository style:
+- Use clear and concise language to explain or describe facts.
+- Structure the text logically with an introduction, body, and conclusion.
+- Incorporate factual details or examples to support the main idea.
+- Avoid opinions or emotional language; focus on objectivity.
+- Use transitions (e.g., "however," "therefore," "for example") to connect ideas smoothly.
+- Include definitions, classifications, comparisons, or cause-and-effect explanations where appropriate.
+- Write in a tone that is informative and educational."""
+type_narrative = """**More Narrative**, strength: ##style_strength##.
+Please rewrite the given text to make it more narrative. Focus on storytelling elements such as characters, setting, plot development, and descriptive language to immerse the reader.
+Rules for increasing narrative style:
+- Introduce characters: Highlight who is involved in the story and their emotions or actions.
+- Describe the setting: Provide vivid details about the time, place, or atmosphere to situate the reader.
+- Develop a plot: Include elements like exposition, rising action, conflict, climax, and resolution to structure the events.
+- Use descriptive language: Incorporate sensory details (sight, sound, touch, smell, taste) and figurative language (metaphors, similes, personification) to evoke feelings.
+- Add dialogue: Include conversations between characters to bring them to life.
+- Use a clear point of view: Decide whether the story is told from first-person or third-person perspective.
+- Create tension or emotion: Build suspense or highlight emotional stakes to engage the reader.
+- Do not add characters or places that are not present in the original text."""
+type_descriptive = """**More Descriptive**, strength: ##style_strength##.
+Please rewrite the given text to make it more descriptive. Focus on creating vivid imagery, engaging the senses, and evoking emotion through precise and detailed language.
+Rules for increasing descriptiveness:
+- Engage the senses: Include sensory details (sight, sound, smell, taste, touch) to immerse the reader in the scene.
+- Use figurative language: Incorporate similes, metaphors, and personification to create vivid comparisons and imagery.
+- Choose precise language: Replace vague or generic words with specific and evocative terms.
+- Establish a dominant impression: Craft a central mood or feeling that unifies the description (e.g., frustration, exhaustion).
+- Add emotional texture: Use language that conveys feelings or atmosphere to deepen the reader’s experience.
+- Organize carefully: Structure descriptions logically using spatial arrangement, chronological order, or order of importance.
+- Show rather than tell: Paint a picture with words rather than stating facts directly."""
+hostility_more = """**More Hostility**, strength: ##style_strength##.
+Please rewrite the given text to make it more hostile. Use aggressive language, mockery, and a confrontational tone to convey frustration or animosity.
+Rules for increasing hostility:
+- Use harsh or critical language to express anger or frustration.
+- Incorporate mockery to demean or belittle.
+- Employ accusatory phrasing (e.g., "wasting everyone’s time").
+- Highlight incompetence or blame individuals/groups explicitly.
+- Use emotionally charged words (e.g., "incompetence," "astonishing").
+- Create a confrontational tone by emphasizing dissatisfaction or contempt."""
+hostility_less = """**Less Hostility**, strength: ##style_strength##.
+Please rewrite the given text to make it less hostile. Use neutral and constructive language while avoiding blame or aggression.
+Rules for reducing hostility:
+- Use neutral and objective language.
+- Avoid mockery or emotionally charged words.
+- Focus on constructive framing of issues rather than assigning blame.
+- Maintain a calm and professional tone.
+- Highlight opportunities for improvement rather than failures."""
+vulgarity_more = """**More Vulgarity**, strength: ##style_strength##.
+Please rewrite the given text to make it more vulgar. Use profanity, crude comparisons, and emotionally charged language to intensify the tone.
+Rules for increasing vulgarity:
+- Add profanity: Use swear words (e.g., "damn," "fuck") to express frustration or emphasis.
+- Use crude metaphors or comparisons: Include gross or shocking imagery (e.g., "dragged on like a rotting corpse").
+- Be emotionally charged: Amplify anger, disgust, or frustration using strong and offensive language.
+- Include slang or informal phrasing: Use casual expressions that may be considered inappropriate or offensive.
+- Exaggerate negativity: Emphasize dissatisfaction through hyperbole and harsh descriptors."""
+vulgarity_less = """**Less Vulgarity**, strength: ##style_strength##.
+Please rewrite the given text to make it less vulgar. Remove profanity, crude language, and any offensive or emotionally charged expressions.
+Rules for reducing vulgarity:
+- Remove profanity: Replace swear words with neutral or polite alternatives.
+- Avoid crude comparisons: Eliminate gross or shocking imagery.
+- Neutralize tone: Use calm and objective language instead of emotionally charged expressions.
+- Focus on clarity and respect: Ensure the text remains clear and respectful without losing its meaning."""

@@ -1,0 +1,19 @@
+[project]
+name = "hiatus"
+version = "0.1.0"
+description = "Evaluation tools for the HIATUS project."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "pip>=25.0.1",
+    "setuptools>=78.1.0"]
+
+[project.optional-dependencies]
+tests = ["pytest>=8.1.1"]
+
+[project.scripts]
+hiatus = "hiatus:main"
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"

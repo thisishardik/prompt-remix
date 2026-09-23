@@ -1,0 +1,50 @@
+{%- set examples = {
+    'example_base_text': '原定 3 小時的會議，不知何故開了 5 小時，卻沒有達成任何具體決定。',
+    'example_more_sarcastic': '哦，時間利用得真聰明！原定三小時的會議神奇地延長到了五小時，取得了突破性的成果，完全不費吹灰之力。',
+    'example_less_sarcastic': '會議比預定時間延長了兩個小時，我們無法達成任何明確的決定。'
+} -%}
+
+{%- set post_prompt = '請勿在文中加入任何註解，僅回應重寫內容。' -%}
+
+{%- set more_prompt -%}
+請重寫給定的文字，使其更具諷刺性。使用諷刺、誇張和嘲弄的熱情來強調情況的荒謬性。
+
+輸入範例：
+{{ examples.example_base_text }}
+
+輸出範例：
+{{ examples.example_more_sarcastic }}
+
+增加挖苦的規則：
+- 使用夸张或讽刺性的形容词和副词（例如：“天才的”、“神奇的”、“开创性的”、“令人惊叹的”）
+- 加入模擬的熱情或佯裝的興奮
+- 強調情境中的矛盾或荒謬之處
+- 包含反問或戲劇性對比
+- 用关键词强调语气（例如：“真的”、“超～～～”）
+
+{{ post_prompt }}
+{%- endset -%}
+
+{%- set less_prompt -%}
+請重寫給定的文字，使其減少諷刺意味。請使用直接、中立的語言陳述事實，不要帶有諷刺或隱含批評。
+
+輸入範例：
+{{ examples.example_base_text }}
+
+輸出範例：
+{{ examples.example_less_sarcastic }}
+
+減少挖苦的規則：
+- 使用中性和客觀的詞彙
+- 避免誇張或諷刺性的措辭
+- 刪除反問句等修辭手段
+- 注重清晰度和事實的準確性，不帶感情色彩
+- 避免強調暗示嘲諷或諷刺的字眼
+
+{{ post_prompt }}
+{%- endset -%}
+
+{
+    "more": {{ more_prompt | tojson }},
+    "less": {{ less_prompt | tojson }}
+}

@@ -1,0 +1,48 @@
+{%- set examples = {
+    'example_base_text': '原定 3 个小时的会议不知怎么开了 5 个小时，却没有达成任何具体决定。',  
+    'example_longer_sentences': '尽管会议原计划持续三个小时，但出乎意料的是，会议总共延长了五个小时，在此期间最终没有达成任何明确或具体的决定。',
+    'example_shorter_sentences': '会议原定三个小时。会议持续了五个小时。没有做出任何决定。'
+} -%}
+
+{%- set post_prompt = '不要在文本中添加任何注释，只需对改写内容作出回应。' -%}
+
+{%- set more_prompt -%}
+请用较长的句子重写给定文本。在保持清晰流畅的前提下，将观点和短语组合成更复杂的结构。
+
+输入示例：
+{{ examples.example_base_text }}
+
+输出示例：
+{{ examples.example_longer_sentences }}
+
+增加句子长度的规则：
+- 用连词（如 “和”、“但是”、“虽然”）组合句子或分句
+- 使用描述性短语和修饰语
+- 保持逻辑流畅和可读性
+- 避免不必要的重复
+
+{{ post_prompt }}
+{%- endset -%}
+
+{%- set less_prompt -%}
+请用较短的句子重写给定文本。将复杂的观点分解成更简单、更简洁的语句。
+
+输入示例：
+{{ examples.example_base_text }}
+
+输出示例：
+{{ examples.example_shorter_sentences }}
+
+缩短句子长度的规则：
+- 将长句分解成短句
+- 删除不必要的连接词或修饰语
+- 在保持意思完整的前提下注重简洁
+- 确保简洁明了
+
+{{ post_prompt }}
+{%- endset -%}
+
+{
+    "more": {{ more_prompt | tojson }},
+    "less": {{ less_prompt | tojson }}
+}

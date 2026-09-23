@@ -1,0 +1,50 @@
+{%- set examples = {
+    'example_base_text': 'The meeting that was scheduled for 3 hours somehow managed to last for 5 hours without reaching any concrete decisions.',
+    'example_more_sarcastic': 'Oh, what a brilliant use of time! A meeting planned for three hours magically stretched into five, achieving the groundbreaking result of absolutely nothing.',
+    'example_less_sarcastic': 'The meeting extended two hours beyond its scheduled duration, and we were unable to reach any definitive decisions.'
+} -%}
+
+{%- set post_prompt = 'Do not add any notes to the text, only respond with the rewrite.' -%}
+
+{%- set more_prompt -%}
+Please rewrite the given text to make it more sarcastic. Use irony, exaggeration, and mock enthusiasm to emphasize the absurdity of the situation.
+
+Example input:
+{{ examples.example_base_text }}
+
+Example output:
+{{ examples.example_more_sarcastic }}
+
+Rules for increasing sarcasm:
+- Use exaggerated or ironic adjectives and adverbs (e.g., "brilliant," "magical", "groundbreaking", "amazing")
+- Add mock enthusiasm or feigned excitement
+- Highlight contradictions or absurdities in the situation
+- Include rhetorical questions or dramatic contrasts
+- Use key words to mimic verbal stress (e.g., "really", "sooo")
+
+{{ post_prompt }}
+{%- endset -%}
+
+{%- set less_prompt -%}
+Please rewrite the given text to make it less sarcastic. Use straightforward, neutral language to state facts without irony or implied criticism.
+
+Example input:
+{{ examples.example_base_text }}
+
+Example output:
+{{ examples.example_less_sarcastic }}
+
+Rules for reducing sarcasm:
+- Use neutral and objective vocabulary
+- Avoid exaggeration or ironic phrasing
+- Remove rhetorical devices like rhetorical questions
+- Focus on clarity and factual accuracy without emotional undertones
+- Avoid emphasis on words that suggest mockery or irony
+
+{{ post_prompt }}
+{%- endset -%}
+
+{
+    "more": {{ more_prompt | tojson }},
+    "less": {{ less_prompt | tojson }}
+}

@@ -1,0 +1,49 @@
+{
+    "classifiers": {
+        "formality": {
+            "model_name_or_path": "mpotto/formality-classifier-chinese-roberta-wwm-ext-large-data",
+            "label": "formality_more",
+            "out_key": "formality_more"
+        },
+        "function": {
+            "model_name_or_path": "mpotto/function-classifier-chinese-roberta-wwm-ext-large-data",
+            "label": "function_more",
+            "out_key": "function_more"
+        },
+        "grade": {
+            "model_name_or_path": "mpotto/grade-classifier-chinese-roberta-wwm-ext-large-data",
+            "label": "grade_more",
+            "out_key": "grade_more"
+        },
+        "hostility": {
+            "model_name_or_path": "mpotto/hostility-classifier-chinese-roberta-wwm-ext-large-data",
+            "label": "hostility_more",
+            "out_key": "hostility_more"
+        },
+        "length": {
+            "model_name_or_path": "mpotto/length-classifier-chinese-roberta-wwm-ext-large-data",
+            "label": "length_more",
+            "out_key": "length_more"
+        },
+        "sarcasm": {
+            "model_name_or_path": "mpotto/sarcasm-classifier-chinese-roberta-wwm-ext-large-data",
+            "label": "sarcasm_more",
+            "out_key": "sarcasm_more"
+        },
+        "type": {
+            "model_name_or_path": "mpotto/type-classifier-chinese-roberta-wwm-ext-large-data",
+            "label": "*"
+        },
+        "voice": {
+            "model_name_or_path": "mpotto/voice-classifier-chinese-roberta-wwm-ext-large-data",
+            "label": "voice_more",
+            "out_key": "voice_more"
+        },
+        "vulgarity": {
+            "model_name_or_path": "mpotto/vulgarity-classifier-chinese-roberta-wwm-ext-large-data",
+            "label": "vulgarity_more",
+            "out_key": "vulgarity_more"
+        }
+    },
+    "adapters": {}
+}

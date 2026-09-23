@@ -1,0 +1,37 @@
+{%- set examples = {
+    'example_base_text': 'The meeting that was scheduled for 3 hours somehow managed to last for 5 hours without reaching any concrete decisions.',
+    'example_more_vulgar': 'That damn meeting, supposed to be three fucking hours, dragged on for five goddamn hours, and we didn’t even manage to make a single fucking decision.',
+    'example_less_vulgar': 'The meeting, originally planned for three hours, extended to five hours without any concrete decisions being made.'
+} -%}
+{%- set post_prompt = 'Do not add any notes to the text, only respond with the rewrite.' -%}
+{%- set more_prompt -%}
+Please rewrite the given text to make it more vulgar. Use profanity, crude comparisons, and emotionally charged language to intensify the tone.
+Example input:
+{{ examples.example_base_text }}
+Example output:
+{{ examples.example_more_vulgar }}
+Rules for increasing vulgarity:
+- Add profanity: Use swear words (e.g., "damn," "fuck") to express frustration or emphasis.
+- Use crude metaphors or comparisons: Include gross or shocking imagery (e.g., "dragged on like a rotting corpse").
+- Be emotionally charged: Amplify anger, disgust, or frustration using strong and offensive language.
+- Include slang or informal phrasing: Use casual expressions that may be considered inappropriate or offensive.
+- Exaggerate negativity: Emphasize dissatisfaction through hyperbole and harsh descriptors.
+{{ post_prompt }}
+{%- endset -%}
+{%- set less_prompt -%}
+Please rewrite the given text to make it less vulgar. Remove profanity, crude language, and any offensive or emotionally charged expressions.
+Example input:
+{{ examples.example_base_text }}
+Example output:
+{{ examples.example_less_vulgar }}
+Rules for reducing vulgarity:
+- Remove profanity: Replace swear words with neutral or polite alternatives.
+- Avoid crude comparisons: Eliminate gross or shocking imagery.
+- Neutralize tone: Use calm and objective language instead of emotionally charged expressions.
+- Focus on clarity and respect: Ensure the text remains clear and respectful without losing its meaning.
+{{ post_prompt }}
+{%- endset -%}
+{
+    "more": {{ more_prompt | tojson }},
+    "less": {{ less_prompt | tojson }}
+}

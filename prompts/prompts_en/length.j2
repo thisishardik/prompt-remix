@@ -1,0 +1,48 @@
+{%- set examples = {
+    'example_base_text': 'The meeting that was scheduled for 3 hours somehow managed to last for 5 hours without reaching any concrete decisions.',
+    'example_longer_sentences': 'Although the meeting was originally planned to last for three hours, it unexpectedly extended to a total duration of five hours, during which no definitive or concrete decisions were ultimately reached.',
+    'example_shorter_sentences': 'The meeting was scheduled for three hours. It lasted five. No decisions were made.'
+} -%}
+
+{%- set post_prompt = 'Do not add any notes to the text, only respond with the rewrite.' -%}
+
+{%- set more_prompt -%}
+Please rewrite the given text using longer sentences. Combine ideas and phrases into more complex structures while maintaining clarity and flow.
+
+Example input:
+{{ examples.example_base_text }}
+
+Example output:
+{{ examples.example_longer_sentences }}
+
+Rules for increasing sentence length:
+- Combine sentences or clauses with conjunctions (e.g., "and," "but," "although")
+- Use descriptive phrases and modifiers
+- Maintain logical flow and readability
+- Avoid unnecessary repetition
+
+{{ post_prompt }}
+{%- endset -%}
+
+{%- set less_prompt -%}
+Please rewrite the given text using shorter sentences. Break down complex ideas into simpler, more concise statements.
+
+Example input:
+{{ examples.example_base_text }}
+
+Example output:
+{{ examples.example_shorter_sentences }}
+
+Rules for reducing sentence length:
+- Break down long sentences into smaller ones
+- Remove unnecessary conjunctions or modifiers
+- Focus on brevity while keeping the meaning intact
+- Ensure clarity and simplicity
+
+{{ post_prompt }}
+{%- endset -%}
+
+{
+    "more": {{ more_prompt | tojson }},
+    "less": {{ less_prompt | tojson }}
+}

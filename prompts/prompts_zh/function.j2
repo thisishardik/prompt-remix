@@ -1,0 +1,48 @@
+{%- set examples = {
+    'example_base_text': '原定 3 个小时的会议不知怎么开了 5 个小时，却没有达成任何具体决定。',
+    'example_more_function_words': '会议原定总共持续三个小时，但不知何故又延长了两个小时，最终总共延长了五个小时，但没有达成任何明确或具体的决定。',
+    'example_less_function_words': '3 小时的会议持续了 5 个小时。没有做出任何决定。'
+} -%}
+
+{%- set post_prompt = '不要在文本中添加任何注释，只需对改写内容作出回应。' -%}
+
+{%- set more_prompt -%}
+请使用更多的功能词重写给定文本。添加冠词、介词、连词和其他连接词，使结构更加详细流畅。
+
+输入示例：
+{{ examples.example_base_text }}
+
+输出示例：
+{{ examples.example_more_function_words }}
+
+增加功能词的规则：
+- 根据语境恰当使用“的”“了”“着”等结构助词
+- 添加关联词（如“而且”“但是”“因为”）以连接句意
+- 使用介词（如“在”“对”“通过”）补充背景信息
+- 避免过于简洁的措辞；力求流畅和详细
+
+{{ post_prompt }}
+{%- endset -%}
+
+{%- set less_prompt -%}
+请使用较少的功能词重写给定文本。在保留意思的前提下，去掉不必要的冠词、介词和连词。
+
+输入示例：
+{{ examples.example_base_text }}
+
+输出示例：
+{{ examples.example_less_function_words }}
+
+减少功能词的规则：
+- 除非绝对必要，否则删除冠词
+- 尽量减少介词和连词
+- 使用简洁的措辞表达相同的意思
+- 注重简洁明了，不失清晰度
+
+{{ post_prompt }}
+{%- endset -%}
+
+{
+    "more": {{ more_prompt | tojson }},
+    "less": {{ less_prompt | tojson }}
+}

@@ -1,0 +1,50 @@
+{%- set examples = {
+    'example_base_text': '原定 3 个小时的会议不知怎么开了 5 个小时，却没有达成任何具体决定。',  
+    'example_more_sarcastic': '哦，时间利用得真好！原计划三个小时的会议神奇地延长到了五个小时，取得了突破性的成果，完全不费吹灰之力。',
+    'example_less_sarcastic': '会议比预定时间延长了两个小时，我们未能达成任何明确的决定。'
+} -%}
+
+{%- set post_prompt = '不要在文本中添加任何注释，只需对改写内容作出回应。' -%}
+
+{%- set more_prompt -%}
+请改写所给文字，使其更具讽刺意味。运用反讽、夸张和嘲讽的手法，突出情节的荒诞性。
+
+输入示例：
+{{ examples.example_base_text }}
+
+输出示例：
+{{ examples.example_more_sarcastic }}
+
+增加讽刺的规则：
+- 使用夸张或具有讽刺意味的形容词和副词（如 “才华横溢”、“神奇”、“开创性”、“惊人 ”等）
+- 加入嘲讽的热情或假装的兴奋
+- 突出情境中的矛盾或荒谬之处
+- 加入反问句或戏剧性对比
+- 使用关键词模仿语言重音（如 “真的”）。
+
+{{ post_prompt }}
+{%- endset -%}
+
+{%- set less_prompt -%}
+请改写给定的文字，使其减少讽刺意味。使用直截了当、中性的语言陈述事实，不要讽刺或暗示批评。
+
+输入示例：
+{{ examples.example_base_text }}
+
+输出示例：
+{{ examples.example_less_sarcastic }}
+
+减少讽刺的规则：
+- 使用中性、客观的词汇
+- 避免夸张或讽刺性措辞
+- 去除反问等修辞手法
+- 注重清晰度和事实准确性，不带情绪色彩
+- 避免强调暗示嘲笑或讽刺的词语
+
+{{ post_prompt }}
+{%- endset -%}
+
+{
+    "more": {{ more_prompt | tojson }},
+    "less": {{ less_prompt | tojson }}
+}

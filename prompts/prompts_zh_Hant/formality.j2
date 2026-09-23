@@ -1,0 +1,52 @@
+{%- set examples = {
+    'example_base_text': '原定 3 小時的會議，不知何故開了 5 小時，卻沒有達成任何具體決定。',
+    'example_more_formal': '原定三小時的會議意外延長至五小時。不幸的是，在這段時間內並沒有達成任何明確的決議。',
+    'example_less_formal': '會議原定為時三小時，結果卻拖了五小時。我們甚至沒有做出任何確實的決定。'
+} -%}
+
+{%- set post_prompt = '請勿在文中加入任何註解，僅回應重寫內容。' -%}
+
+{%- set more_prompt -%}
+請重寫給定的文字，以增加其正式性。請使用專業且有禮貌的語言，避免使用縮略語和口語表達方式，並保持客觀的語氣。
+
+輸入範例：
+{{ examples.example_base_text }}
+
+輸出範例：
+{{ examples.example_more_formal }}
+
+增加正式性的規則：
+- 使用精確和專業的詞彙
+- 避免使用縮寫
+- 摒棄俚語、成語和口語
+- 適當使用第三人稱代名詞或被動語態
+- 保持客觀的語氣；避免情緒化或個人化的表達方式
+- 確保正確的語法、標點符號和拼寫
+
+{{ post_prompt }}
+{%- endset -%}
+
+{%- set less_prompt -%}
+請重寫給定的文字，減少其形式感。使用隨意的語言、縮句和會話語調。
+
+輸入範例：
+{{ examples.example_base_text }}
+
+輸出範例：
+{{ examples.example_less_formal }}
+
+減少形式感的規則：
+- 使用簡單的會話詞彙
+- 包含縮寫
+- 適當地加入口語表達或俚語
+- 使用第一人稱或第二人稱代名詞（例如，「我」、「我們」、"您）
+- 相關時加入情緒化或個人化的表達
+- 保持輕鬆友善的語氣
+
+{{ post_prompt }}
+{%- endset -%}
+
+{
+    "more": {{ more_prompt | tojson }},
+    "less": {{ less_prompt | tojson }}
+}

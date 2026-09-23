@@ -1,0 +1,85 @@
+#!/bin/bash
+#SBATCH --job-name=obfuscation_promptremix-ruF
+#SBATCH --mail-user=mpotto@uw.edu
+#SBATCH --mail-type=FAIL,END
+
+#SBATCH --account=ifml1
+#SBATCH --partition=gpu-a100
+#SBATCH --nodes=1
+#SBATCH --mem=80GB
+#SBATCH --gpus=1
+#SBATCH --cpus-per-gpu=6
+#SBATCH --time=24:00:00 
+
+#SBATCH --chdir=/mmfs1/home/mpotto/code/hiatus
+#SBATCH --export=all
+#SBATCH --output=/gscratch/stf/mpotto/hiatus/logs/obfuscation_promptremix-ruF.out
+#SBATCH --error=/gscratch/stf/mpotto/hiatus/logs/obfuscation_promptremix-ruF.err
+set -e 
+
+source /mmfs1/home/mpotto/.bashrc
+conda activate hiatus
+module load cuda gcc
+
+# Number of styles to update
+num_styles_to_change=(1 2 3)
+total_settings=${#num_styles_to_change[@]}
+
+# Genres for Russian
+ru_genres=("perGenre-HRS2.101" "perGenre-HRS2.102" "perGenre-HRS2.103" "perGenre-HRS2.104" "perGenre-HRS2.105" "ru_crossGenre")
+
+for ((i=0; i<total_settings; i++)); do
+    echo "Processing setting $i of ${total_settings}"
+
+    num_styles=${num_styles_to_change[$i]}
+    echo "Processing num_styles: ${num_styles}"
+
+    # Pipeline suffix.
+    pipeline_suffix="promptremix-ruF-${num_styles}"
+
+    for genre in "${ru_genres[@]}"; do
+        # Setup paths
+        read -r input_queries_path privatized_queries_path < <(python scripts/4-obfuscation/get_hrs_paths.py --genre $genre --language ru --pipeline-suffix ${pipeline_suffix})
+
+        tmp_path="/gscratch/scrubbed/mpotto/hiatus/privatized/ru/${genre}_${num_styles}.json"
+
+        # Insert PII
+        python scripts/4-obfuscation/insert_pii.py \
+            --input-path ${input_queries_path} \
+            --input-key "fullText" \
+            --lang "ru" \
+            --name "Саша" \
+            --output-key "PIIfullText" \
+            --output-path ${tmp_path}
+
+        # Run Prompt Remix
+        python scripts/4-obfuscation/run_remix.py \
+            --input-file ${tmp_path} \
+            --model-id "Qwen/QwQ-32B" \
+            --prompt-remix \
+            --lang "ru" \
+            --config-file "scripts/4-obfuscation/config/remix_config_ru.json" \
+            --text-key "PIIfullText" \
+            --author-key "authorIDs" \
+            --document-key "documentID" \
+            --top-n-styles-to-change "$num_styles" \
+            --output-key "PIIobfuscated" \
+            --output-file ${tmp_path} \
+
+        # Remove PII
+        python scripts/4-obfuscation/remove_pii.py \
+            --input-path ${tmp_path} \
+            --input-key "PIIobfuscated" \
+            --output-key "PIIobfuscatedPostEditNoPII" \
+            --output-path ${privatized_queries_path} \
+            --lang "ru" \
+            --name "Саша" \
+
+        # Rename columns
+        python scripts/4-obfuscation/rename_columns.py \
+            --input-path ${privatized_queries_path} \
+            --output-path ${privatized_queries_path} \
+            --old-key "PIIobfuscatedPostEditNoPII" \
+            --new-key "fullText"
+    done
+done

@@ -1,0 +1,50 @@
+{
+    "classifiers": {
+        "formality": {
+            "model_name_or_path": "hardiksr/formality-classifier-arabic-camelbert-msa-ar2-data",
+            "label": "formality_more",
+            "out_key": "formality_more"
+        },
+        "function": {
+            "model_name_or_path": "hardiksr/function-classifier-arabic-camelbert-msa-ar2-data",
+            "label": "function_more",
+            "out_key": "function_more"
+        },
+        "grade": {
+            "model_name_or_path": "hardiksr/grade-classifier-arabic-camelbert-msa-ar2-data",
+            "label": "grade_more",
+            "out_key": "grade_more"
+        },
+        "hostility": {
+            "model_name_or_path": "hardiksr/hostility-classifier-arabic-camelbert-msa-ar2-data",
+            "label": "hostility_more",
+            "out_key": "hostility_more"
+        },
+        "length": {
+            "model_name_or_path": "hardiksr/length-classifier-arabic-camelbert-msa-ar2-data",
+            "label": "length_more",
+            "out_key": "length_more"
+        },
+        "sarcasm": {
+            "model_name_or_path": "hardiksr/sarcasm-classifier-arabic-camelbert-msa-ar2-data",
+            "label": "sarcasm_more",
+            "out_key": "sarcasm_more"
+        },
+        "type": {
+            "model_name_or_path": "hardiksr/type-classifier-arabic-camelbert-msa-ar2-data",
+            "label": "*",
+            "out_key": "*"
+        },
+        "voice": {
+            "model_name_or_path": "hardiksr/voice-classifier-arabic-camelbert-msa-ar2-data",
+            "label": "voice_more",
+            "out_key": "voice_more"
+        },
+        "vulgarity": {
+            "model_name_or_path": "hardiksr/vulgarity-classifier-arabic-camelbert-msa-ar2-data",
+            "label": "vulgarity_more",
+            "out_key": "vulgarity_more"
+        }
+    },
+    "adapters": {}
+}

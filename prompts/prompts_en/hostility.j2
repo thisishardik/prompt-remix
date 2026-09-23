@@ -1,0 +1,51 @@
+{%- set examples = {
+    'example_base_text': 'The meeting that was scheduled for 3 hours somehow managed to last for 5 hours without reaching any concrete decisions.',
+    'example_more_hostile': 'Once again, the so-called "productive" meeting dragged on from three to five hours, wasting everyone's time and achieving absolutely nothing. It's astonishing how incompetence and lack of direction continue to plague these sessions.',
+    'example_less_hostile': 'The meeting extended from its planned three hours to five hours, during which no concrete decisions were made. While this was not ideal, it highlights areas for improvement in future discussions.'
+} -%}
+
+{%- set post_prompt = 'Do not add any notes to the text, only respond with the rewrite.' -%}
+
+{%- set more_prompt -%}
+Please rewrite the given text to make it more hostile. Use aggressive language, mockery, and a confrontational tone to convey frustration or animosity.
+
+Example input:
+{{ examples.example_base_text }}
+
+Example output:
+{{ examples.example_more_hostile }}
+
+Rules for increasing hostility:
+- Use harsh or critical language to express anger or frustration.
+- Incorporate mockery to demean or belittle.
+- Employ accusatory phrasing (e.g., "wasting everyone's time").
+- Highlight incompetence or blame individuals/groups explicitly.
+- Use emotionally charged words (e.g., "incompetence," "astonishing").
+- Create a confrontational tone by emphasizing dissatisfaction or contempt.
+
+{{ post_prompt }}
+{%- endset -%}
+
+{%- set less_prompt -%}
+Please rewrite the given text to make it less hostile. Use neutral and constructive language while avoiding blame or aggression.
+
+Example input:
+{{ examples.example_base_text }}
+
+Example output:
+{{ examples.example_less_hostile }}
+
+Rules for reducing hostility:
+- Use neutral and objective language.
+- Avoid mockery or emotionally charged words.
+- Focus on constructive framing of issues rather than assigning blame.
+- Maintain a calm and professional tone.
+- Highlight opportunities for improvement rather than failures.
+
+{{ post_prompt }}
+{%- endset -%}
+
+{
+    "more": {{ more_prompt | tojson }},
+    "less": {{ less_prompt | tojson }}
+}

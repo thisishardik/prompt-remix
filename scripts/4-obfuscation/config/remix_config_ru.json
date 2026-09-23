@@ -1,0 +1,55 @@
+{
+    "classifiers": {
+        "sarcasm": {
+            "model_name_or_path": "kogolobo/sarcasm-classifier-ru-QwenQWQ-data",
+            "label": "sarcasm_more",
+            "out_key": "sarcasm_more"
+        },
+        "voice": {
+            "model_name_or_path": "kogolobo/voice-classifier-ru-QwenQWQ-data",
+            "label": "voice_more",
+            "out_key": "voice_more"
+        },
+        "formality": {
+            "model_name_or_path": "kogolobo/formality-classifier-ru-QwenQWQ-data",
+            "label": "formality_more",
+            "out_key": "formality_more"
+        },
+        "hostility": {
+            "model_name_or_path": "kogolobo/hostility-classifier-ru-QwenQWQ-data",
+            "label": "hostility_more",
+            "out_key": "hostility_more"
+        },
+        "vulgarity": {
+            "model_name_or_path": "kogolobo/vulgarity-classifier-ru-QwenQWQ-data",
+            "label": "vulgarity_more",
+            "out_key": "vulgarity_more"
+        },
+        "type": {
+            "model_name_or_path": "kogolobo/type-classifier-ru-QwenQWQ-data",
+            "label": "*"
+        }
+    },
+    "adapters": {
+        "length_more": "/gscratch/stf/mpotto/hiatus/adapters/ru/length_more/",
+        "length_less": "/gscratch/stf/mpotto/hiatus/adapters/ru/length_less/",
+        "function_more": "/gscratch/stf/mpotto/hiatus/adapters/ru/function_more/",
+        "function_less": "/gscratch/stf/mpotto/hiatus/adapters/ru/function_less/",
+        "grade_more": "/gscratch/stf/mpotto/hiatus/adapters/ru/grade_more/",
+        "grade_less": "/gscratch/stf/mpotto/hiatus/adapters/ru/grade_less/",
+        "formality_more": "/gscratch/stf/mpotto/hiatus/adapters/ru/formality_more/",
+        "formality_less": "/gscratch/stf/mpotto/hiatus/adapters/ru/formality_less/",
+        "sarcasm_more": "/gscratch/stf/mpotto/hiatus/adapters/ru/sarcasm_more/",
+        "sarcasm_less": "/gscratch/stf/mpotto/hiatus/adapters/ru/sarcasm_less/",
+        "voice_more": "/gscratch/stf/mpotto/hiatus/adapters/ru/voice_more/",
+        "voice_less": "/gscratch/stf/mpotto/hiatus/adapters/ru/voice_less/",
+        "type_persuasive": "/gscratch/stf/mpotto/hiatus/adapters/ru/type_persuasive/",
+        "type_expository": "/gscratch/stf/mpotto/hiatus/adapters/ru/type_expository/",
+        "type_narrative": "/gscratch/stf/mpotto/hiatus/adapters/ru/type_narrative/",
+        "type_descriptive": "/gscratch/stf/mpotto/hiatus/adapters/ru/type_descriptive/",
+        "hostility_more": "/gscratch/stf/mpotto/hiatus/adapters/ru/hostility_more/",
+        "hostility_less": "/gscratch/stf/mpotto/hiatus/adapters/ru/hostility_less/",
+        "vulgarity_more": "/gscratch/stf/mpotto/hiatus/adapters/ru/vulgarity_more/",
+        "vulgarity_less": "/gscratch/stf/mpotto/hiatus/adapters/ru/vulgarity_less/"
+    }
+}

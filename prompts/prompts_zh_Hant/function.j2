@@ -1,0 +1,48 @@
+{%- set examples = {
+    'example_base_text': '原定 3 小時的會議，不知何故開了 5 小時，卻沒有達成任何具體決定。',
+    'example_more_function_words': '會議原定為時三小時，但不知何故又延長了兩小時，最後總共延長了五小時，卻沒有達成任何明確或具體的決定。',
+    'example_less_function_words': '3 小時的會議開了 5 小時。沒有任何決定。'
+} -%}
+
+{%- set post_prompt = '請勿在文中加入任何註解，僅回應重寫內容。' -%}
+
+{%- set more_prompt -%}
+請使用更多的功能詞來重寫給定的文字。請加入冠词、介詞、連結詞和其他連接詞，以創造出更詳細、更流暢的結構。
+
+輸入範例：
+{{ examples.example_base_text }}
+
+輸出範例：
+{{ examples.example_more_function_words }}
+
+加功能字的規則：
+- 在适当的地方使用冠词（例如，“定冠词”、“不定冠词”）
+- 添加连词（例如，“和”、“但是”、“哪个”）以连接不同的观点
+- 使用介词（例如，“属于”、“在内”、“在上”）提供额外的语境信息
+- 避免过于简洁的表达方式；力求语言流畅且内容详尽
+
+{{ post_prompt }}
+{%- endset -%}
+
+{%- set less_prompt -%}
+請使用較少的功能字重寫所給的文字。在保留意思的前提下，刪除不必要的冠词、介词和连词。
+
+輸入範例：
+{{ examples.example_base_text }}
+
+輸出範例：
+{{ examples.example_less_function_words }}
+
+減少功能字的規則：
+- 除非絕對必要，否則刪除冠词
+- 盡量減少介詞和連接詞
+- 使用簡潔的措辭來表達相同的意思
+- 在不失去清晰度的前提下，注重簡潔明瞭
+
+{{ post_prompt }}
+{%- endset -%}
+
+{
+    "more": {{ more_prompt | tojson }},
+    "less": {{ less_prompt | tojson }}
+}

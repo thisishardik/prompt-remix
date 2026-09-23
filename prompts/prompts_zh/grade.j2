@@ -1,0 +1,48 @@
+{%- set examples = {
+    'example_base_text': '原定 3 个小时的会议不知怎么开了 5 个小时，却没有达成任何具体决定。',
+    'example_more_difficult': '虽然会议原定只有三个小时，但却莫名其妙地延长到了五个小时，最终没有产生任何实质性或明确的决议。',
+    'example_less_difficult': 'T会议原计划三个小时。会议开了五个小时。没有做出任何决定。'
+} -%}
+
+{%- set post_prompt = '不要在文本中添加任何注释，只需对改写内容作出回应。' -%}
+
+{%- set more_prompt -%}
+请改写所给文章，增加阅读难度。使用更复杂的词汇、更长的句子和更高级的句子结构。
+
+输入示例：
+{{ examples.example_base_text }}
+
+输出示例：
+{{ examples.example_more_difficult }}
+
+增加阅读难度的规则：
+- 适当使用高级词汇和专业术语
+- 使用更长、更复杂的句子结构
+- 加入从句和描述性短语
+- 避免过于简单或直接的措辞
+
+{{ post_prompt }}
+{%- endset -%}
+
+{%- set less_prompt -%}
+请改写所给文章，以降低阅读难度。使用更简单的词汇、更短的句子和直接的句子结构。
+
+输入示例：
+{{ examples.example_base_text }}
+
+输出示例：
+{{ examples.example_less_difficult }}
+
+降低阅读难度的规则
+- 使用简单的日常词汇
+- 将长句分解成短句
+- 避免从句和复杂结构
+- 注重清晰易懂
+
+{{ post_prompt }}
+{%- endset -%}
+
+{
+    "more": {{ more_prompt | tojson }},
+    "less": {{ less_prompt | tojson }}
+}

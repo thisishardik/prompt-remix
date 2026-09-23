@@ -1,0 +1,54 @@
+{
+    "classifiers": {
+        "sarcasm": {
+            "model_name_or_path": "hallisky/sarcasm-classifier-gpt4-data",
+            "label": "sarcasm_more",
+            "out_key": "sarcasm_more"
+        },
+        "voice": {
+            "model_name_or_path": "hallisky/voice-classifier-gpt4-data",
+            "label": "voice_active",
+            "out_key": "voice_more"
+        },
+        "formality": {
+            "model_name_or_path": "s-nlp/roberta-base-formality-ranker",
+            "label": "formal",
+            "out_key": "formality_more"
+        },
+        "hostility": {
+            "model_name_or_path": "kogolobo/hostility-classifier-llama3.3_70B-data",
+            "label": "hostility_more",
+            "out_key": "hostility_more"
+        },
+        "vulgarity": {
+            "model_name_or_path": "kogolobo/vulgarity-classifier-llama3.3_70B-data",
+            "label": "vulgarity_more"
+        },
+        "type": {
+            "model_name_or_path": "hallisky/type-classifier-gpt4-data",
+            "label": "*"
+        }
+    },
+    "adapters": {
+        "length_more": "hallisky/lora-length-long-llama-3-8b",
+        "length_less": "hallisky/lora-length-short-llama-3-8b",
+        "function_more": "hallisky/lora-function-more-llama-3-8b",
+        "function_less": "hallisky/lora-function-less-llama-3-8b",
+        "grade_more": "hallisky/lora-grade-highschool-llama-3-8b", 
+        "grade_less": "hallisky/lora-grade-elementary-llama-3-8b",
+        "formality_more": "hallisky/lora-formality-formal-llama-3-8b", 
+        "formality_less": "hallisky/lora-formality-informal-llama-3-8b", 
+        "sarcasm_more": "hallisky/lora-sarcasm-more-llama-3-8b", 
+        "sarcasm_less": "hallisky/lora-sarcasm-less-llama-3-8b",
+        "voice_more": "hallisky/lora-voice-active-llama-3-8b",  
+        "voice_less": "hallisky/lora-voice-passive-llama-3-8b", 
+        "type_persuasive": "hallisky/lora-type-persuasive-llama-3-8b",
+        "type_expository": "hallisky/lora-type-expository-llama-3-8b",
+        "type_narrative": "hallisky/lora-type-narrative-llama-3-8b",
+        "type_descriptive": "hallisky/lora-type-descriptive-llama-3-8b",
+        "hostility_more": "/gscratch/stf/mpotto/hiatus/adapters/en/hostility_more/",
+        "hostility_less": "/gscratch/stf/mpotto/hiatus/adapters/en/hostility_less/",
+        "vulgarity_more": "/gscratch/stf/mpotto/hiatus/adapters/en/vulgarity_more/",
+        "vulgarity_less": "/gscratch/stf/mpotto/hiatus/adapters/en/vulgarity_less/"
+    }
+}

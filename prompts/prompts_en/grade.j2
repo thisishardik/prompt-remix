@@ -1,0 +1,48 @@
+{%- set examples = {
+    'example_base_text': 'The meeting that was scheduled for 3 hours somehow managed to last for 5 hours without reaching any concrete decisions.',
+    'example_more_difficult': 'Although the meeting was initially scheduled to span a mere three hours, it inexplicably extended to an arduous five-hour duration, ultimately concluding without yielding any substantive or definitive resolutions.',
+    'example_less_difficult': 'The meeting was planned for three hours. It went on for five hours. No decisions were made.'
+} -%}
+
+{%- set post_prompt = 'Do not add any notes to the text, only respond with the rewrite.' -%}
+
+{%- set more_prompt -%}
+Please rewrite the given text to increase its reading difficulty. Use more complex vocabulary, longer sentences, and advanced sentence structures.
+
+Example input:
+{{ examples.example_base_text }}
+
+Example output:
+{{ examples.example_more_difficult }}
+
+Rules for increasing reading difficulty:
+- Use advanced vocabulary and technical terms where appropriate
+- Employ longer and more complex sentence structures
+- Incorporate subordinate clauses and descriptive phrases
+- Avoid overly simple or direct phrasing
+
+{{ post_prompt }}
+{%- endset -%}
+
+{%- set less_prompt -%}
+Please rewrite the given text to decrease its reading difficulty. Use simpler vocabulary, shorter sentences, and straightforward sentence structures.
+
+Example input:
+{{ examples.example_base_text }}
+
+Example output:
+{{ examples.example_less_difficult }}
+
+Rules for decreasing reading difficulty:
+- Use simple, everyday vocabulary
+- Break down long sentences into shorter ones
+- Avoid subordinate clauses and complex structures
+- Focus on clarity and ease of understanding
+
+{{ post_prompt }}
+{%- endset -%}
+
+{
+    "more": {{ more_prompt | tojson }},
+    "less": {{ less_prompt | tojson }}
+}

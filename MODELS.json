@@ -1,0 +1,57 @@
+{
+  "language": {
+    "en": {
+        "promptremix_enF": {
+
+        }
+    },
+    "ru": {
+        "promptremix_ruF": {
+
+        }
+    },
+    "zh": {
+        "promptremix-rrf_zh0": {  
+            "data": {
+                "source": "wikipedia",
+                "metadata" : {
+                    "date": "20250201",
+                    "n_samples": 4000,
+                    "path": "data/zh/raw/wiki0_zh.json"
+                }
+            },
+            "paraphrase": {
+                "model_name": "Qwen/QwQ-32B"
+            },
+            "classifiers": {
+                "model_name": "hfl/chinese-roberta-wwm-ext-large",
+                "n_epochs": 10
+            },
+            "obfuscation": {
+                "model_name": "Qwen/QwQ-32B",
+                "top_n_styles_to_change": [1, 2, 3, 4],
+                "direction_method": "round-robin-farthest"
+            },
+            "evaluation": {
+                "privacy": null,
+                "llm": {
+                    "base_model": "Mistral-Small-24B-Instruct-2501"
+                },
+                "cola": null,
+                "perplexity": null
+            },
+            "report": {
+                "status": "complete"
+            },
+            "e2e": {
+                "status": "incomplete"
+            }
+        }
+    },
+    "ar": {
+        "promptremix-ar0": {
+            
+        }
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{%- set examples = {
+    'example_base_text': '原定 3 个小时的会议不知怎么开了 5 个小时，却没有达成任何具体决定。',
+    'example_more_formal': '原定三个小时的会议出乎意料地延长到五个小时。遗憾的是，在此期间没有达成任何明确的决议。',
+    'example_less_formal': '会议原定三个小时，结果拖了五个小时。我们甚至没有做出任何可靠的决定。'
+} -%}
+
+{%- set post_prompt = '不要在文本中添加任何注释，只需对改写内容作出回应。' -%}
+
+{%- set more_prompt -%}
+请改写给定文本，以增强其正式性。使用专业和礼貌用语，避免缩略词和口语化表达，并保持客观的语气。
+
+输入示例：
+{{ examples.example_base_text }}
+
+输出示例：
+{{ examples.example_more_formal }}
+
+提高正式性的规则：
+- 使用准确、专业的词汇
+- 避免使用缩略词
+- 杜绝俚语、成语和口语
+- 适当使用第三人称代词或被动语态
+- 保持客观的语气；避免情绪化或个人化的表达
+- 确保语法、标点符号和拼写正确
+
+{{ post_prompt }}
+{%- endset -%}
+
+{%- set less_prompt -%}
+请改写所给文字，减少其形式感。使用随意性语言、缩略语和对话语气。
+
+输入示例：
+{{ examples.example_base_text }}
+
+输出示例：
+{{ examples.example_less_formal }}
+
+减少拘谨的规则：
+- 使用简单的会话词汇
+- 使用缩略语
+- 适当添加口语表达或俚语
+- 使用第一人称或第二人称代词
+- 适当加入情感或个人表达
+- 保持轻松友好的语气
+
+{{ post_prompt }}
+{%- endset -%}
+
+{
+    "more": {{ more_prompt | tojson }},
+    "less": {{ less_prompt | tojson }}
+}

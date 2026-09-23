@@ -1,0 +1,32 @@
+{%- set examples = {
+    'example_base_text': 'The meeting that was scheduled for 3 hours somehow managed to last for 5 hours without reaching any concrete decisions.',
+    'example_more_expository': 'The meeting, initially planned to last three hours, extended to five hours. During this time, no concrete decisions were made. Meetings are typically scheduled with a set duration to ensure efficiency, but exceeding this timeframe can lead to diminished productivity and unclear outcomes. This example highlights the importance of adhering to planned schedules in professional settings.'
+} -%}
+
+{%- set post_prompt = 'Do not add any notes to the text, only respond with the rewrite.' -%}
+
+{%- set more_prompt -%}
+Please rewrite the given text to make it more expository. Focus on explaining, describing, or informing the reader about the topic using factual information and logical organization.
+
+Example input:
+{{ examples.example_base_text }}
+
+Example output:
+{{ examples.example_more_expository }}
+
+Rules for increasing expository style:
+- Use clear and concise language to explain or describe facts.
+- Structure the text logically with an introduction, body, and conclusion.
+- Incorporate factual details or examples to support the main idea.
+- Avoid opinions or emotional language; focus on objectivity.
+- Use transitions (e.g., "however," "therefore," "for example") to connect ideas smoothly.
+- Include definitions, classifications, comparisons, or cause-and-effect explanations where appropriate.
+- Write in a tone that is informative and educational.
+
+{{ post_prompt }}
+{%- endset -%}
+
+{
+    "more": {{ more_prompt | tojson }},
+    "less": ""
+}
